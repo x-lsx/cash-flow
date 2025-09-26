@@ -1,5 +1,6 @@
 from django.contrib import admin
-
+from django import forms
+from django.core.exceptions import ValidationError
 from .models import FlowStatus, FlowType, FlowCategory, FlowSubcategory, Transaction
 from rangefilter.filters import DateRangeFilter
 
@@ -58,6 +59,7 @@ class FlowSubcategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
+
     list_display = ("created_at", "amount", "status", "type", "category", "subcategory", "comment")
     list_filter = (("created_at", DateRangeFilter), "status", "type", UniqueCategoryListFilter, UniqueSubcategoryListFilter)
     search_fields = ("comment",)

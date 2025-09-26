@@ -79,14 +79,18 @@ class Transaction(models.Model):
         if self.amount is not None and self.amount <= 0:
             errors["amount"] = "Сумма должна быть больше 0."
 
-        # if self.category is not None and self.type is not None and self.category.type != self.type:
-        #     errors["category"] = "Категория не относится к выбранному типу."
+        if self.category is not None and self.type is not None and self.category.type != self.type:
+            errors["category"] = "Категория не относится к выбранному типу."
 
-        # if self.subcategory and self.category and self.subcategory.category != self.category:
-        #     errors["subcategory"] = "Подкатегория не относится к выбранной категории."
+        if self.subcategory and self.category and self.subcategory.category != self.category:
+            errors["subcategory"] = "Подкатегория не относится к выбранной категории."
 
         if errors:
             raise ValidationError(errors)
+    
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
         
     class Meta:
         verbose_name = 'Денежная транзакция'
