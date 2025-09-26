@@ -47,9 +47,6 @@ class FlowSubcategory(models.Model):
     def __str__(self):
         return f"{self.name}"
     
-    def show_type_name(self):
-        return {self.category.type.name}
-    
     class Meta:
         verbose_name = ('Подкатегория')
         verbose_name_plural = ('Подкатегории')
